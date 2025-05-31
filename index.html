@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Text Editor</title>
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: #f4f4f4;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .toolbar {
+      background-color: #2d2f33;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .toolbar button {
+      background: none;
+      border: none;
+      color: #ccc;
+      font-size: 1.2rem;
+      padding: 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .toolbar button:hover {
+      color: white;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .toolbar button:active {
+      transform: scale(0.95);
+    }
+
+    #colorPicker {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: none;
+      padding: 0;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #textEditor {
+      width: 90%;
+      height: 70vh;
+      margin: 20px auto;
+      padding: 15px;
+      background: white;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      overflow-y: auto;
+      font-size: 16px;
+      line-height: 1.5;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      outline: none;
+    }
+
+    #textEditor:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .toolbar {
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+      
+      .toolbar button {
+        font-size: 1rem;
+        padding: 6px;
+      }
+      
+      #textEditor {
+        width: 95%;
+        height: 60vh;
+        margin: 10px auto;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <button onclick="formatText('bold')" title="Bold">
+      <i class="bi bi-type-bold"></i>
+    </button>
+    <button onclick="formatText('underline')" title="Underline">
+      <i class="bi bi-type-underline"></i>
+    </button>
+    <button onclick="formatText('italic')" title="Italic">
+      <i class="bi bi-type-italic"></i>
+    </button>
+    <input type="color" id="colorPicker" onchange="changeTextColor(this.value)" title="Text Color">
+    <button onclick="formatText('justifyLeft')" title="Align Left">
+      <i class="bi bi-text-left"></i>
+    </button>
+    <button onclick="formatText('justifyCenter')" title="Align Center">
+      <i class="bi bi-text-center"></i>
+    </button>
+    <button onclick="formatText('justifyRight')" title="Align Right">
+      <i class="bi bi-text-right"></i>
+    </button>
+    <button onclick="formatText('justifyFull')" title="Justify">
+      <i class="bi bi-justify"></i>
+    </button>
+    <button onclick="formatText('undo')" title="Undo">
+      <i class="bi bi-arrow-counterclockwise"></i>
+    </button>
+    <button onclick="formatText('redo')" title="Redo">
+      <i class="bi bi-arrow-clockwise"></i>
+    </button>
+  </div>
+
+  <!-- Editable Area -->
+  <div id="textEditor" contenteditable="true">
+    Start typing here...
+  </div>
+
+  <script>
+    // Function to execute formatting commands
+    function formatText(command) {
+      document.execCommand(command, false, null);
+      focusEditor();
+    }
+
+    // Function to change text color
+    function changeTextColor(color) {
+      document.execCommand('foreColor', false, color);
+      focusEditor();
+    }
+
+    // Function to maintain focus on editor
+    function focusEditor() {
+      document.getElementById('textEditor').focus();
+    }
+
+    // Initialize editor focus when page loads
+    window.addEventListener('load', function() {
+      focusEditor();
+    });
+
+    // Prevent losing focus when clicking toolbar buttons
+    document.querySelectorAll('.toolbar button').forEach(button => {
+      button.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+      });
+    });
+  </script>
+</body>
+</html>

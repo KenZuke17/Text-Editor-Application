@@ -12,3 +12,5 @@ A web-based text editor application with advanced formatting features including 
 - Undo/Redo functionality
 - Keyboard shortcuts support
 
+# Live demo
+https://kenzuke17.github.io/Text-Editor-Application/
